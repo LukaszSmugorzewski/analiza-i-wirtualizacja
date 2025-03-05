@@ -31,4 +31,8 @@ print(funkcja2(2,4))
 print("\nzadanie 5\n")
 
 def funkcja3(x):
-    
+    new_array = np.arange(1, x+1)
+    nowalista = new_array[::-1]
+    nowalista = np.diag(nowalista)
+    return nowalista
+print(funkcja3(3))
