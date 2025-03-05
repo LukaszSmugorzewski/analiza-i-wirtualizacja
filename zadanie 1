@@ -1,0 +1,34 @@
+import numpy as np
+
+print("ZADANIE 1\n")
+
+a = np.arange(2,41,2)
+print(a)
+
+print("\nzadanie 2\n")
+
+b = [12.4, 15.6, 23.5, 1.5, 7.5]
+c = np.array(b, dtype='int64')
+print(b)
+print(c)
+
+print("\nzadanie 3\n")
+
+# def funkcja1():
+#     d = int(input("wpisz liczbę całkowitą: "))
+#     e = np.arange(1, d+1)
+#     return e
+#
+# print(funkcja1())
+
+print("\nzadanie 4\n")
+
+def funkcja2(g,f):
+    wynik = np.logspace(start=1, stop=f, num=f, base=g, dtype='int64')
+    return wynik
+print(funkcja2(2,4))
+
+print("\nzadanie 5\n")
+
+def funkcja3(x):
+    
