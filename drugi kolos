@@ -1,0 +1,22 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("pokemon.csv", encoding='latin1')
+wow = df.head()
+print(wow)
+jo = df.groupby("Type 1")["Defense"].mean()
+df['Średnia obrona wg. Typu 1'] = df.groupby("Type 1")["Defense"].transform("mean")
+df["Ulubiony"] = np.where((df['Type 1'] == 'Rock') | (df['Type 2'] == 'Rock'), "Tak", "Nie")
+df["Dwa typy"] = df["Type 1"] + " - " + df["Type 2"].fillna("")
+dlugosc1 = len(df)
+df = df[df["Legendary"] != True]
+dlugosc2 = len(df)
+nie_ma = df["Type 2"].isna().sum()
+df.to_csv("modified_pokemon.csv", index=False)
+
+print(df)
+print(dlugosc1)
+print(dlugosc2)
+print(nie_ma)
