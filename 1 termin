@@ -594,6 +594,7 @@ explode = (0.2, 0, 0.2, 0, 0.2, 0, 0)
 fig, ax = plt.subplots()
 ax.pie(wyniki, explode=explode, labels=znaki, counterclock=True, startangle=90)
 circle = plt.Circle((0, 0), 0.5, color='white')
+ax.text(-0.19,0, "ABCDEFG")
 ax.add_artist(circle)
 plt.show()
 
@@ -606,14 +607,54 @@ import matplotlib.pyplot as plt
 from sqlite3 import connect
 
 df = pd.read_excel("handel15.xlsx")
-
 print(df)
+sklepy = df.loc[df["Wyszczególnienie"] == "sklepy"]
+y_pos = np.arange(len(sklepy))
+cmap = plt.colormaps['Set3']
+kolory = [cmap(i) for i in range(len(sklepy))]
+
+fig, ax = plt.subplots(figsize=(8,6))
+
+ax.barh(y_pos, sklepy['Wartosc'],label= sklepy["Rok"], color=kolory, alpha=0.8)
+ax.set_yticks(y_pos, sklepy['Rok'])
+ax.set_ylabel('Produkty')
+ax.set_xlabel('Liczba sprzedanych sztuk')
+plt.title('Sprzedaż produktów elektronicznych w ostatnim miesiącu')
+ax.grid(axis='x', alpha=0.3)
+plt.tight_layout()
+plt.legend()
+fig.text(0.95,0.96,"2137")
+
+plt.show()
 
 
 
+=================================================================================== RANDOM
 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
 
+df = pd.read_excel("mleko13.xlsx")
 
+mleko = df.loc[df["Rodzaje produktów"] == "Mleko 3,2% tłuszczu - za 1 l"]
+jogurt = df.loc[df["Rodzaje produktów"] == "Jogurt naturalny - za 150g"]
+
+fig, ax = plt.subplots()
+ax.scatter(mleko["Rok"],mleko["Wartosc"], label="Mleko", color="green", marker="^", s=75)
+ax.scatter(jogurt["Rok"],jogurt["Wartosc"], label="jogurt", color="blue", marker="h", s=100)
+
+ax.set_ylabel("Cena")
+ax.set_xlabel("Rok")
+
+plt.title("Gówno")
+plt.grid(alpha=0.5)
+plt.legend(loc=3)
+
+plt.annotate("niezla sperma",(2016,df["Wartosc"].max()), xytext=(2014,df["Wartosc"].max() - 0.5), arrowprops=dict(facecolor="green"))
+
+plt.show()
 
 
 
