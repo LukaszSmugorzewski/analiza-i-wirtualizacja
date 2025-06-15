@@ -582,45 +582,32 @@ plt.show()
 print(df.head())
 
 
-====================================================================================================== ZESTAW 3 =====================================================================================================
+====================================================================================================== ZESTAW 4 =====================================================================================================
 ======================================================================================== zad 1
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+znaki = ["A","B","C","D","E","F","G"]
+wyniki = [10,7,23,4,20,13,25]
+explode = (0.2, 0, 0.2, 0, 0.2, 0, 0)
+fig, ax = plt.subplots()
+ax.pie(wyniki, explode=explode, labels=znaki, counterclock=True, startangle=90)
+circle = plt.Circle((0, 0), 0.5, color='white')
+ax.add_artist(circle)
+plt.show()
+
+
+======================================================================================== zad 2
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sqlite3 import connect
 
-df = pd.read_csv("travel12.csv", sep=";")
+df = pd.read_excel("handel15.xlsx")
+
 print(df)
-
-df["Transport"] = df["Transport"].astype(float).round(2)
-df["Zakwaterowanie"] = df["Zakwaterowanie"].astype(float).round(2)
-df["Jedzenie"] = df["Jedzenie"].astype(float).round(2)
-df["Zwiedzanie"] = df["Zwiedzanie"].astype(float).round(2)
-df["Inne"] = df["Inne"].astype(float).round(2)
-
-włochy = df.loc[df["Podróż"] == "Włochy"]
-Hiszpania = df.loc[df["Podróż"] == "Hiszpania"]
-
-włochy1 = włochy.iloc[0, 1:].values
-Hiszpania1 = Hiszpania.iloc[0, 1:].values
-
-
-fig, axs = plt.subplots(1,2,figsize=(14,4))
-
-axs[0].pie(włochy1)
-
-
-
-axs[1].pie
-
-
-
-print(włochy1)
-
-
-
-
 
 
 
