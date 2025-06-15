@@ -340,18 +340,76 @@ max_index = df1["Wartość"].idxmax()
 explode = [0.1 if i == max_index else 0 for i in df1.index]
 
 ax.pie(df1["Wartość"], labels=df1["Nazwa"], colors=kolory, startangle=15, counterclock=False, explode=explode, autopct="%d%%")
+
+circle = plt.Circle((0, 0), 0.7, color='white')
+p = plt.gcf()
+p.gca().add_artist(circle)
+
 ax.set_title("jakies tam wartości")
 fig.text(0,0,"14.06.2025")
 plt.show()
 
 ======================================================================================== zad 3
 
-pojebane
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
+
+
+data = pd.read_csv("koleje11.csv", sep=" ")
+
+df = data.melt(id_vars='Marka', var_name='Rok', value_name='Wartość')
+df['Rok'] = df['Rok'].astype(int)
+
+Eurostar = df.loc[df["Marka"] == "Eurostar"]
+SNCF = df.loc[df["Marka"] == "SNCF"]
+
+fig, axs = plt.subplots(1,2, figsize=(14,4))
+
+axs[0].barh(Eurostar["Rok"], Eurostar["Wartość"], color="skyblue")
+axs[0].set_title("Eurostar")
+axs[0].set_xlabel("Wartość")
+axs[0].set_ylabel("Rok")
+axs[0].grid(True, axis='x', linestyle='--', alpha=0.7)
+axs[0].set_xticks(np.arange(0, 15000, 2000))
+
+axs[1].barh(SNCF["Rok"], SNCF["Wartość"], color="lightgreen")
+axs[1].set_title("SNCF")
+axs[1].set_xlabel("Wartość")
+axs[1].grid(True, axis='x', linestyle='--', alpha=0.7)
+axs[1].set_xticks(np.arange(0, 15000, 2000))
+
+fig.suptitle("Porównanie wartości Eurostar i SNCF w latach 2010–2019", fontsize=14)
+plt.tight_layout()
+plt.show()
+
+
+print(df)
+
+
+
 
 ====================================================================================================== ZESTAW 2 =====================================================================================================
 =======================================================================================  zad 1
 
+import matplotlib.pyplot as plt
+import numpy as np
 
+np.random.seed(0)
+
+x = np.random.exponential(scale=100, size=90)
+
+plt.hist(x, bins=[0, 200, 400, 600, 800], edgecolor='black', color='steelblue')
+
+plt.ylabel("Liczba pomiarów")
+plt.yticks([0, 20, 40, 60, 80])
+plt.xlabel("Czas reakcji")
+plt.xticks([0, 200, 400, 600, 800])
+plt.title("Histogram czasu reakcji")
+plt.grid(axis='y', linestyle='--', alpha=0.5)
+plt.tight_layout()
+plt.show()
 
 =======================================================================================  zad 2
 
@@ -388,3 +446,187 @@ fig.text(0,0,"14.06.2025")
 
 
 plt.show()
+
+
+======================================================================================== zad 3
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
+
+df = pd.read_csv("travel12.csv", sep=";")
+print(df)
+
+df["Transport"] = df["Transport"].astype(float).round(2)
+df["Zakwaterowanie"] = df["Zakwaterowanie"].astype(float).round(2)
+df["Jedzenie"] = df["Jedzenie"].astype(float).round(2)
+df["Zwiedzanie"] = df["Zwiedzanie"].astype(float).round(2)
+df["Inne"] = df["Inne"].astype(float).round(2)
+
+włochy = df.loc[df["Podróż"] == "Włochy"]
+Hiszpania = df.loc[df["Podróż"] == "Hiszpania"]
+
+włochy1 = włochy.iloc[0, 1:].values
+Hiszpania1 = Hiszpania.iloc[0, 1:].values
+
+
+fig, axs = plt.subplots(1,2,figsize=(14,4))
+
+kolory = ["Green", "Blue", "Purple","Yellow","Brown"]
+
+axs[0].pie(włochy1, labels=["Transport","Zakwaterowanie","Jedzenie","Zwiedzanie","Inne"], colors=kolory, autopct='%1.1f%%')
+axs[0].set_title('Hiszpania')
+axs[0].set_aspect('equal')
+
+
+axs[1].pie(Hiszpania1, labels=["Transport","Zakwaterowanie","Jedzenie","Zwiedzanie","Inne"], colors=kolory, autopct='%1.1f%%')
+axs[1].set_title('Włochy')
+axs[1].set_aspect('equal')
+
+plt.show()
+
+
+
+====================================================================================================== ZESTAW 3 =====================================================================================================
+======================================================================================== zad 1
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({'Panstwo': ['PL', 'DE', 'FR', 'SK'],
+                'A': [20, 41, 18, 43],
+                'B': [10, 21, 42, 24],
+                'C': [64, 70, 60, 67]
+})
+
+A= df['A']
+B=df['B']
+C=df['C']
+Panstwo = df['Panstwo']
+
+Y= np.arange(len(Panstwo))
+
+plt.barh(Y,A, color='lightgray', height=0.25,label='A')
+plt.barh(Y+0.25,B,color='darkorange',height=0.25,label='B')
+plt.barh(Y+0.50,C,color='yellowgreen',height=0.25,label='C')
+
+plt.yticks(Y+ 0.25,Panstwo)
+plt.legend(loc='upper right')
+plt.title('Wykres',fontsize=14)
+plt.xlabel('Podpis osi 2')
+plt.ylabel('Podpis osi 1')
+
+plt.grid(alpha=0.3)
+plt.tight_layout()
+
+plt.show()
+
+======================================================================================== zad 2
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
+
+
+conn = connect('parki13.db')
+df1 = pd.read_sql("SELECT * FROM dane", con=conn)
+print(df1.columns)
+
+df = df1.loc[df1["Rok"] == 2016]
+DF = df[df['Nazwa'].isin(['MAZOWIECKIE', 'ŚLĄSKIE', 'WIELKOPOLSKIE', 'MAŁOPOLSKIE', 'DOLNOŚLĄSKIE'])]
+kolory = ["Green","Blue","Purple","Orange","Red"]
+
+plt.pie(DF['Wartosc'], labels=DF["Nazwa"], colors=kolory, autopct='%1.1f%%', )
+
+plt.title("Wartości Terenów zielonych poszczególnych wojewódcstw")
+
+plt.show()
+
+======================================================================================== zad 3
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
+
+df = pd.read_csv("hr13.csv", sep=";",)
+print(df.columns)
+
+df["Dochód_miesięczny_PLN"] = df["Dochód_miesięczny_PLN"].str.replace(",", ".").astype(float).round(2)
+df["Liczba_godzin_pracy_tygodniowo"] = df["Liczba_godzin_pracy_tygodniowo"].str.replace(",", ".").astype(float).round(2)
+df["Lata_doświadczenia_zawodowego"] = df["Lata_doświadczenia_zawodowego"].str.replace(",", ".").astype(float).round(2)
+
+
+koszyki = pd.cut(df["Lata_doświadczenia_zawodowego"], bins=5, right=False)
+
+
+plt.figure(figsize=(8,5))
+
+
+plt.hist(df["Lata_doświadczenia_zawodowego"], bins=5)
+
+
+
+plt.xlabel("lata doświadczenia")
+plt.ylabel("liczba osob")
+plt.title("gówno")
+
+plt.tight_layout()
+plt.show()
+
+plt.show()
+
+print(df.head())
+
+
+====================================================================================================== ZESTAW 3 =====================================================================================================
+======================================================================================== zad 1
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sqlite3 import connect
+
+df = pd.read_csv("travel12.csv", sep=";")
+print(df)
+
+df["Transport"] = df["Transport"].astype(float).round(2)
+df["Zakwaterowanie"] = df["Zakwaterowanie"].astype(float).round(2)
+df["Jedzenie"] = df["Jedzenie"].astype(float).round(2)
+df["Zwiedzanie"] = df["Zwiedzanie"].astype(float).round(2)
+df["Inne"] = df["Inne"].astype(float).round(2)
+
+włochy = df.loc[df["Podróż"] == "Włochy"]
+Hiszpania = df.loc[df["Podróż"] == "Hiszpania"]
+
+włochy1 = włochy.iloc[0, 1:].values
+Hiszpania1 = Hiszpania.iloc[0, 1:].values
+
+
+fig, axs = plt.subplots(1,2,figsize=(14,4))
+
+axs[0].pie(włochy1)
+
+
+
+axs[1].pie
+
+
+
+print(włochy1)
+
+
+
+
+
+
+
+
+
+
+
+
+
