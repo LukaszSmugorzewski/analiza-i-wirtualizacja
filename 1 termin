@@ -280,28 +280,6 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 
-====================================================================================================== ZESTAW 1 =====================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ====================================================================================================== ZESTAW 1 ======================================================================================================
 
 =====================================================================================  zad 1
@@ -340,4 +318,73 @@ plt.show()
 
 
 =======================================================================================  zad 2
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
+df = pd.read_excel("licea11.xlsx")
+
+print(df)
+
+df1 = df.loc[df["Wartość"] < 150]
+
+print(df1)
+
+fig, ax = plt.subplots()
+cmap = plt.colormaps['Set3']
+
+kolory = [cmap(i) for i in range(len(df1))]
+
+max_index = df1["Wartość"].idxmax()
+explode = [0.1 if i == max_index else 0 for i in df1.index]
+
+ax.pie(df1["Wartość"], labels=df1["Nazwa"], colors=kolory, startangle=15, counterclock=False, explode=explode, autopct="%d%%")
+ax.set_title("jakies tam wartości")
+fig.text(0,0,"14.06.2025")
+plt.show()
+
+======================================================================================== zad 3
+
+pojebane
+
+====================================================================================================== ZESTAW 2 =====================================================================================================
+=======================================================================================  zad 1
+
+
+
+=======================================================================================  zad 2
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_excel("sprzedaz12.xlsx")
+print(df)
+
+Jabłka = df[df["Produkt"] == "Jabłka"]["Sprzedaż"].values
+Gruszki = df[df["Produkt"] == "Gruszki"]["Sprzedaż"].values
+Morele = df[df["Produkt"] == "Morele"]["Sprzedaż"].values
+
+Rok = sorted(df["Rok"].unique())
+
+fig, ax = plt.subplots()
+
+X = np.arange(len(Rok))
+ax.barh(X - 0.25, Jabłka, height=0.25, label='Jabłka')
+ax.barh(X, Gruszki, height=0.25, label='Gruszki')
+ax.barh(X + 0.25, Morele, height=0.25, label='Morele')
+
+ax.set_xticks(np.arange(0, 2100, 300))
+ax.set_yticks(X)
+ax.set_yticklabels(Rok)
+
+plt.xlabel('Produkty')
+plt.title('sprzedaz produktów na przestrzeni lat')
+plt.legend()
+plt.grid()
+fig.text(0,0,"14.06.2025")
+
+
+plt.show()
