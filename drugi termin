@@ -1,0 +1,113 @@
+import pandas as pd
+
+# 1. Wczytaj dane z separatorem #
+df = pd.read_csv("K16_szpitale16.csv", sep="#")
+
+# 2. Zmień typy danych (ręcznie, jasno)
+df["2016"] = df["2016"].astype(int)
+df["2017"] = df["2017"].astype(int)
+df["2018"] = df["2018"].astype(int)
+df["2019"] = df["2019"].astype(int)
+
+print(df.head())
+
+
+Województwo#2016#2017#2018#2019
+DOLNOŚLĄSKIE#72#74#73#73
+KUJAWSKO-POMORSKIE#40#42#39#41
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+import pandas as pd
+
+# Wczytaj jako tekst bez cudów
+df = pd.read_csv("K15_pekin15.csv", header=None)
+
+# Rozdziel dane po znaku #
+df = df[0].str.split("#", expand=True)
+
+# Usuń pierwszy wiersz (nagłówki)
+df = df.iloc[1:]
+
+# Nazwij kolumny
+df.columns = ["Państwo", "Złoto", "Srebro", "Brąz", "Razem"]
+
+# Ręcznie rzutuj liczby, bez cudowania
+df["Złoto"] = df["Złoto"].astype(int)
+df["Srebro"] = df["Srebro"].astype(int)
+df["Brąz"] = df["Brąz"].astype(int)
+df["Razem"] = df["Razem"].astype(int)
+
+print(df.head())
+
+
+
+Państwo#Złoto#Srebro#Brąz#Razem
+Norwgia#16#8#13#37
+Nimcy#12#10#4#26
+Chińska Rpublika Ludowa#9#4#2#15
+Stany Zjdnoczon###
+Szwcja#8#5#5#18
+
+-----------------------------------------------------------------------------------------------------------------
+
+import pandas as pd
+
+# 1. Wczytaj dane z separatorem '#'
+df = pd.read_csv("K12_pekin12.csv", sep="#")
+
+# 2. Zamień przecinki na kropki i przerób dane na float
+df["Autobus"] = df["Autobus"].str.replace(",", ".").astype(float).round(2)
+df["Tramwaj"] = df["Tramwaj"].str.replace(",", ".").astype(float).round(2)
+df["Pociąg"] = df["Pociąg"].str.replace(",", ".").astype(float).round(2)
+df["Samolot"] = df["Samolot"].str.replace(",", ".").astype(float).round(2)
+df["Taxi"] = df["Taxi"].str.replace(",", ".").astype(float).round(2)
+
+# 3. Rok na int
+df["Rok"] = df["Rok"].astype(int)
+
+# 4. Gotowe
+print(df.head())
+
+Rok#Autobus#Tramwaj#Pociąg#Samolot#Taxi
+2021#6103,647714601306#16833,364817768997#22405,071654416985#23252,81783029854#3296,3298232666807
+2022#9318,017316324904#18305,54715034262#17093,791255436423#27229,116339886867#5146,858580370883
+2023#9290,692717621796#11953,572653225896#23448,013499081055#31195,317884319993#6577,394646408331
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sqlite3 import connect
+import matplotlib.cm as cm
+import seaborn as sns
+
+df = pd.read_csv("produkcja_rolna_gospodarstwa.csv",sep=";",decimal=",")# decimal zamienia ci przecinki na kropki
+df["Pszenica_2017"]=df["Pszenica_2017"].astype(float).round(2)
+df["Ziemniaki_2017"]=df["Ziemniaki_2017"].astype(float).round(2)
+df["Warzywa_2017"]=df["Warzywa_2017"].astype(float).round(2)
+df["Owoce_2017"]=df["Owoce_2017"].astype(float).round(2)
+df["Mleko_2017"]=df["Mleko_2017"].astype(float).round(2)
+df["Pszenica_2019"] = df["Pszenica_2019"].astype(float).round(2)
+df["Ziemniaki_2019"] = df["Ziemniaki_2019"].astype(float).round(2)
+df["Warzywa_2019"] = df["Warzywa_2019"].astype(float).round(2)
+df["Owoce_2019"] = df["Owoce_2019"].astype(float).round(2)
+df["Mleko_2019"] = df["Mleko_2019"].astype(float).round(2)
+df["Pszenica_2021"] = df["Pszenica_2021"].astype(float).round(2)
+df["Ziemniaki_2021"] = df["Ziemniaki_2021"].astype(float).round(2)
+df["Warzywa_2021"] = df["Warzywa_2021"].astype(float).round(2)
+df["Owoce_2021"] = df["Owoce_2021"].astype(float).round(2)
+df["Mleko_2021"] = df["Mleko_2021"].astype(float).round(2)
+
+
+
+      Gospodarstwo  Pszenica_2017  ...  Owoce_2021   Mleko_2021
+0  Gospodarstwo_Kowalskich     141.186141  ...   54.493884  2821.601788
+1     Farma_Zielona_Dolina      97.841942  ...   29.479373  3203.207805
+2               Agro_Nowak      87.849717  ...   60.002233  3661.954701
+3        EkoFarma_Wiśniowa      95.668548  ...   52.223293  3058.100247
+4   Gospodarstwo_Pod_Lasem     154.408686  ...   41.452402  3721.470054
+5              Rolnik_Plus     113.887921  ...   58.803734  3123.688507
+6          Farma_Słoneczna     161.385239  ...   59.573197  3661.748386
