@@ -214,3 +214,104 @@ plt.legend()
 plt.grid(axis='x', linestyle='--', alpha=0.5)
 plt.tight_layout()
 plt.show()
+
+ZAD 2
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_excel("sprzedaz_sklep.xlsx")
+kategorie = ["Pieczowy","Nabiał","Mięso i wędliny","Owoce i warzywa","Napoje"]
+kolory = ['lightcoral', 'skyblue', 'palegreen', 'khaki', 'plum']
+
+sobota = df.iloc[:, 3]
+
+plt.figure(figsize=(10, 8))
+plt.pie(sobota, labels=kategorie, colors=kolory, autopct='%1.2f%%', startangle=45, counterclock=True, explode=[0.1,0,0,0,0])
+plt.title('Podział wydatków w budżecie domowym', fontsize=16, fontweight='bold')
+plt.text(-2,1.5,"siema")
+
+plt.show()
+
+ZAD 3
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_csv("zuzycie_mediow_szkoly.csv", sep=";", decimal=",")
+df["Prąd_2018"] = df["Prąd_2018"].astype(float).round(2)
+df["Gaz_2018"] = df["Gaz_2018"].astype(float).round(2)
+df["Woda_2018"] = df["Woda_2018"].astype(float).round(2)
+df["Internet_2018"] = df["Internet_2018"].astype(float).round(2)
+df["Telefon_2018"] = df["Telefon_2018"].astype(float).round(2)
+df["Prąd_2020"] = df["Prąd_2020"].astype(float).round(2)
+df["Gaz_2020"] = df["Gaz_2020"].astype(float).round(2)
+df["Woda_2020"] = df["Woda_2020"].astype(float).round(2)
+df["Internet_2020"] = df["Internet_2020"].astype(float).round(2)
+df["Telefon_2020"] = df["Telefon_2020"].astype(float).round(2)
+df["Prąd_2022"] = df["Prąd_2022"].astype(float).round(2)
+df["Gaz_2022"] = df["Gaz_2022"].astype(float).round(2)
+df["Woda_2022"] = df["Woda_2022"].astype(float).round(2)
+df["Internet_2022"] = df["Internet_2022"].astype(float).round(2)
+df["Telefon_2022"] = df["Telefon_2022"].astype(float).round(2)
+
+mickiewicz = df[df["Szkoła"] == "LO_Mickiewicza"]
+
+print(mickiewicz)
+
+lata = [2018, 2020, 2022]
+
+# Wartości dla każdego medium – ręcznie z mickiewicz
+prad = [
+    mickiewicz["Prąd_2018"].values[0],
+    mickiewicz["Prąd_2020"].values[0],
+    mickiewicz["Prąd_2022"].values[0]
+]
+
+gaz = [
+    mickiewicz["Gaz_2018"].values[0],
+    mickiewicz["Gaz_2020"].values[0],
+    mickiewicz["Gaz_2022"].values[0]
+]
+
+woda = [
+    mickiewicz["Woda_2018"].values[0],
+    mickiewicz["Woda_2020"].values[0],
+    mickiewicz["Woda_2022"].values[0]
+]
+
+internet = [
+    mickiewicz["Internet_2018"].values[0],
+    mickiewicz["Internet_2020"].values[0],
+    mickiewicz["Internet_2022"].values[0]
+]
+
+telefon = [
+    mickiewicz["Telefon_2018"].values[0],
+    mickiewicz["Telefon_2020"].values[0],
+    mickiewicz["Telefon_2022"].values[0]
+]
+
+# Tworzenie wykresu
+plt.figure(figsize=(10, 6))
+
+plt.scatter(lata, prad, label="Prąd", color="red", marker="o", s=100, edgecolor='black')
+plt.scatter(lata, gaz, label="Gaz", color="green", marker="s", s=100, edgecolor='black')
+plt.scatter(lata, woda, label="Woda", color="blue", marker="^", s=100, edgecolor='black')
+plt.scatter(lata, internet, label="Internet", color="orange", marker="D", s=100, edgecolor='black')
+plt.scatter(lata, telefon, label="Telefon", color="purple", marker="P", s=100, edgecolor='black')
+
+# Opisy, siatka, legenda
+plt.xlabel("Rok")
+plt.ylabel("Zużycie")
+plt.title("Zużycie mediów w LO Mickiewicza (2018–2022)")
+plt.grid(True, linestyle='--', alpha=0.3)
+plt.legend(title="Medium")
+plt.xticks(lata)
+
+plt.tight_layout()
+plt.show()
