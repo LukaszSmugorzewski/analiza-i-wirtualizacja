@@ -97,3 +97,120 @@ ax2.set_title('Podział wydatków w budżecie domowym w Lipcu', fontsize=10, fon
 plt.show()
 
 ===========================================================================================L12====================================================================================
+
+
+ZAD 1 
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+tygodnie = ["Tydzień 1","Tydzień 2","Tydzień 3","Tydzień 4"]
+twitter = [410,405,430,450]
+tiktok = [720,760,810,870]
+instagram = [850,890,910,950]
+
+fig, ax = plt.subplots(figsize=(10,6))
+x = np.linspace(0, 2, 100)
+ax.plot(tygodnie, instagram, label='Instagram', color="Magenta", marker="o")
+ax.plot(tygodnie, tiktok, label='TikTok', color="Black", marker="v")
+ax.plot(tygodnie, twitter, label='Twitter', color="Blue", marker="h")
+ax.set_yticks([400,500,600,700,800,900,1000])
+ax.set_xlabel('Okres')
+ax.set_ylabel('Liczba użytkowników (tys.)')
+ax.set_title("Aktywni użytkownicy aplikacji społecznościowych")
+ax.legend()
+ax.grid(alpha=0.3)
+plt.show()
+
+ZAD 2
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_excel("noclegi12.xlsx")
+print(df)
+Miejsca = ["Hotel Centrum","Hotel Nadmorski","Hotel Górski"]
+kwartal = df["Kwartał"]
+
+X = np.arange(len(kwartal))
+fig, ax = plt.subplots()
+ax.bar(X - 0.25, df["Hotel Centrum"], color='dodgerblue', width=0.25, label='Hotel Centrum')
+ax.bar(X, df["Hotel Nadmorski"], color='mediumseagreen', width=0.25, label='Hotel Nadmorski')
+ax.bar(X + 0.25, df["Hotel Górski"], color='tomato', width=0.25, label='Hotel Górski')
+ax.set_xticks(X)
+ax.set_xticklabels(kwartal)
+ax.legend(loc = 7)
+ax.set_title('zarobki poszczególnych hoteli w kwartałach', fontsize=14)
+ax.set_ylabel('zarobki')
+ax.set_xlabel('Kwartał')
+ax.grid(axis='y', alpha=0.3)
+fig.text(0.1,0.5,"01.07.2025")
+fig.tight_layout()
+plt.show()
+
+#plt.savefig('timevsdist.pdf', format='pdf')
+
+ZAD 3 
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_csv("czas_aktywnosci.csv", sep=";")
+
+df["Praca_biurowa"] = df["Praca_biurowa"].astype(float).round(2)
+df["Spotkania"] = df["Spotkania"].astype(float).round(2)
+df["Szkolenia"] = df["Szkolenia"].astype(float).round(2)
+df["Projekty"] = df["Projekty"].astype(float).round(2)
+df["Administracja"] = df["Administracja"].astype(float).round(2)
+labele = ["Praca_biurowa","Spotkania","Szkolenia","Projekty","Administracja"]
+kolory = ['lightcoral', 'skyblue', 'palegreen', 'khaki', 'plum']
+
+print(df)
+
+jan = df[df["Pracownik"] == "Jan_Nowak"]
+piotr = df[df["Pracownik"] == "Piotr_Wójcik"]
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 10))
+
+ax1.pie(jan[labele].values[0], labels=labele, colors=kolory, autopct='%1.1f%%', startangle=90)
+ax1.set_title("Jan nowak")
+
+ax2.pie(piotr[labele].values[0], labels=labele, colors=kolory, autopct='%1.1f%%', startangle=90)
+ax2.set_title("piotr nowak")
+
+plt.show()
+
+===========================================================================================L21====================================================================================
+
+ZAD 1 
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+mezczyzni = [-2000, -1900, -2200, -2400, -2600, -2300, -2500, -1700, -900]
+kobiety = [2000, 1900, 2300, 2600, 2800, 2500, 2800, 2400, 1500]
+grupy = ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80+']
+# Rysowanie wykresu przy użyciu
+plt.figure(figsize=(8, 6))
+plt.barh(grupy, mezczyzni, label='Mężczyźni')
+plt.barh(grupy, kobiety, label='Kobiety')
+plt.xlabel('Liczba osób')
+plt.ylabel('Grupa wiekowa')
+plt.title('Piramida wieku populacji')
+
+ticks = np.arange(-3000, 3001, 500)
+
+labels = np.abs(ticks)
+plt.xticks(ticks, labels)
+plt.legend()
+plt.grid(axis='x', linestyle='--', alpha=0.5)
+plt.tight_layout()
+plt.show()
