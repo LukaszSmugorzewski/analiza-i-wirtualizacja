@@ -1,0 +1,99 @@
+===========================================================================================L11====================================================================================
+
+ZAD 1
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+miesiace = ["Kwiecień","Maj","Czerwiec","Lipiec"]
+Gdansk = [7,15,18.2,20]
+Krakow = [12,17,21,23]
+Warszawa = [13,18,22,24]
+
+fig = plt.figure(figsize=(10,5))
+ax = fig.add_subplot(111)
+
+ax.plot(miesiace, Gdansk, 'blue', linestyle="-", marker="s", label="gdańsk")
+ax.plot(miesiace, Krakow, 'green', linestyle="-", marker="D", label="kraków")
+ax.plot(miesiace, Warszawa, 'red', linestyle="-", marker="o", label="warszawa")
+
+ax.set_yticks([8,10,12,14,16,18,20,22,24])
+
+ax.legend(title='Miasto')
+ax.set_xlabel('miesiąc')
+ax.set_ylabel('temperatura (c)')
+ax.set_title("średnia temperatura w polskich miastach (2024)")
+ax.grid(alpha=0.3)
+
+plt.show()
+
+
+ZAD 2
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_excel("oceny11.xlsx")
+
+klasy = df["Klasa"]
+przedmioty = ["Matematyka","Polski","Angielski"]
+X = np.arange(len(klasy))
+
+fig, ax = plt.subplots(figsize=(10, 6))
+
+ax.bar(X - 0.25, df["Matematyka"], width=0.25, label="Matematyka", color="dodgerblue")
+ax.bar(X, df["Polski"], width=0.25, label="Polski", color="mediumseagreen")
+ax.bar(X + 0.25, df["Angielski"],  width=0.25, label="Angielski",  color="tomato")
+
+ax.set_xticks(X)
+ax.set_xticklabels(klasy)
+
+ax.set_xlabel("Klasa")
+ax.set_ylabel("Średnia ocen")
+ax.set_title("Średnie oceny w klasach (2024)")
+
+ax.grid(axis='y', alpha=0.3)
+ax.legend(loc = 7)
+
+fig.text(0.01, 0.5, "01.07.2025")
+
+plt.show()
+
+ZAD 3 
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+df = pd.read_csv("budzet_domowy.csv", sep=";")
+
+df["Mieszkanie"] = df["Mieszkanie"].astype(float).round(2)
+df["Żywność"] = df["Żywność"].astype(float).round(2)
+df["Transport"] = df["Transport"].astype(float).round(2)
+df["Zdrowie"] = df["Zdrowie"].astype(float).round(2)
+df["Rozrywka"] = df["Rozrywka"].astype(float).round(2)
+df["Oszczędności"] = df["Oszczędności"].astype(float).round(2)
+
+Maj = df[df["Miesiąc"] == "Maj"]
+Lipiec = df[df["Miesiąc"] == "Lipiec"]
+labele = ["Mieszkanie","Żywność","Transport","Zdrowie","Rozrywka","Oszczędności"]
+kolory = ['lightcoral', 'skyblue', 'palegreen', 'khaki', 'plum', 'lightsteelblue']
+
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+
+ax1.pie(Maj[labele].values[0], labels=labele, colors=kolory, autopct='%1.1f%%', startangle=90)
+ax1.set_title('Podział wydatków w budżecie domowym w Maju', fontsize=10, fontweight='bold')
+
+ax2.pie(Lipiec[labele].values[0], labels=labele, colors=kolory, autopct='%1.1f%%', startangle=90)
+ax2.set_title('Podział wydatków w budżecie domowym w Lipcu', fontsize=10, fontweight='bold')
+
+plt.show()
+
+===========================================================================================L12====================================================================================
